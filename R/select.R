@@ -152,9 +152,9 @@ select_impl <- function(.data, vars) {
     # check grouped metadata
     group_names <- names(groups)[seq_len(ncol(groups) - 1L)]
     if (any(test <- ! group_names %in% vars)) {
-      abort(
-        glue("{col} not found in groups metadata. Probably a corrupt grouped_df object.", col = group_names[test[1L]]),
-        "dplyr_select_corrupt_grouped_df"
+      stop_dplyr(
+        "dplyr_error_select_corrupt",
+        col = group_names[which(test)[1L]]
       )
     }
 
